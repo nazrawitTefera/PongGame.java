@@ -13,7 +13,7 @@ public class PongGame extends JPanel implements MouseMotionListener {
     private int playerScore;
     private int aiScore;
     private Ball ball;
-    // step 1 add any other private variables you may need to play the game.
+    private Paddle userPaddle;// step 1 add any other private variables you may need to play the game.
 
     public PongGame() {
 
@@ -28,7 +28,7 @@ public class PongGame extends JPanel implements MouseMotionListener {
         addMouseMotionListener(this);
         ball = new Ball(200, 200, 10, 3, Color.RED, 10);
 
-        //create any other objects necessary to play the game.
+        userPaddle=new Paddle(20,100,50,9,Color.RED);//create any other objects necessary to play the game.
 
     }
 
@@ -64,7 +64,7 @@ public class PongGame extends JPanel implements MouseMotionListener {
     // values
     // postcondition: one frame of the game is "played"
     public void gameLogic() {
-        //add commands here to make the game play propperly
+        userPaddle.moveY(userMouseY);//add commands here to make the game play propperly
         
         aiPaddle.moveY(ball.getY());
 
