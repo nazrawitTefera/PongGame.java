@@ -1,3 +1,5 @@
+//nazrawit tefera
+// the use of this class is that it handels moving the paddels and the ball, keeping the score etc
 package com.pong;
 
 import javax.swing.*;
@@ -31,6 +33,23 @@ public class PongGame extends JPanel implements MouseMotionListener {
         userPaddle=new Paddle(20,100,50,9,Color.RED);//create any other objects necessary to play the game.
 
     }
+    public void getScore(){
+        if (ball.getX() > width) {
+        playerScore++;
+        resetBall();
+    }
+    if (ball.getX() < 0) {
+        aiScore++;
+        resetBall();
+    }
+    }
+    public void resetBall() {
+    ball.setX(width / 2);
+    ball.sety(height / 2);
+
+    // reverse direction so it doesn’t go same way each time
+    ball.reverseX();
+}
 
     // precondition: None
     // postcondition: returns playerScore
@@ -56,7 +75,7 @@ public class PongGame extends JPanel implements MouseMotionListener {
         ball.draw(g);
         aiPaddle.draw(g);
         
-        //call the "draw" function of any visual component you'd like to show up on the screen.
+        userPaddle.draw(g);//call the "draw" function of any visual component you'd like to show up on the screen.
 
     }
 
@@ -64,7 +83,9 @@ public class PongGame extends JPanel implements MouseMotionListener {
     // values
     // postcondition: one frame of the game is "played"
     public void gameLogic() {
-        userPaddle.moveY(userMouseY);//add commands here to make the game play propperly
+        ball.moveBall();
+        ball.bounceOffwalls(0, 470);
+        userPaddle.moveY(ball.getY());//add commands here to make the game play propperly
         
         aiPaddle.moveY(ball.getY());
 
@@ -73,6 +94,12 @@ public class PongGame extends JPanel implements MouseMotionListener {
         }
  
         pointScored();
+        if(userPaddle.isTouching(ball)){
+            ball.reverseX();
+        }
+        if(aiPaddle.isTouching(ball)){
+            ball.reverseX();
+        }
 
     }
 
