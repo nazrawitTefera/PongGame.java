@@ -84,21 +84,33 @@ public class PongGame extends JPanel implements MouseMotionListener {
     // postcondition: one frame of the game is "played"
     public void gameLogic() {
         ball.moveBall();
+        checkSpeedUpZone();
+        checkSpeedDownZone();
         ball.bounceOffwalls(0, 470);
         userPaddle.moveY(ball.getY());//add commands here to make the game play propperly
         
         aiPaddle.moveY(ball.getY());
 
-        if (aiPaddle.isTouching(ball)) {
-           ball.reverseX();
-        }
+        //if (aiPaddle.isTouching(ball)) {
+           //ball.reverseX();
+       // }
  
-        pointScored();
+        public void pointScored(){;
         if(userPaddle.isTouching(ball)){
             ball.reverseX();
         }
         if(aiPaddle.isTouching(ball)){
             ball.reverseX();
+        }
+        //pre- none
+        //post- checks the speed and makes sure the ball speed's up when its in the speed up zone
+        public void checkSpeedUpZone(){
+            
+        }
+        //pre-none
+        //post- makes sure that the ball slows down when its in the speed down zone
+        public void checkSpeedDownZone(){
+
         }
 
     }
@@ -109,9 +121,9 @@ public class PongGame extends JPanel implements MouseMotionListener {
     // the player scores if the ball moves off the right edge of the screen (640
     // pixels) and the ai scores
     // if the ball goes off the left edge (0)
-    public void pointScored() {
+    //public void pointScored() {
 
-    }
+    //}
 
     // you do not need to edit the below methods, but please do not remove them as
     // they are required for the program to run.
