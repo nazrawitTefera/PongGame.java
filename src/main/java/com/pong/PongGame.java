@@ -94,13 +94,14 @@ public class PongGame extends JPanel implements MouseMotionListener {
         //if (aiPaddle.isTouching(ball)) {
            //ball.reverseX();
        // }
- 
-        public void pointScored(){;
+    }
+        public void pointScored(){
         if(userPaddle.isTouching(ball)){
             ball.reverseX();
         }
         if(aiPaddle.isTouching(ball)){
             ball.reverseX();
+        }
         }
         //pre- none
         //post- checks the speed and makes sure the ball speed's up when its in the speed up zone
@@ -113,7 +114,7 @@ public class PongGame extends JPanel implements MouseMotionListener {
 
         }
 
-    }
+    
 
     // precondition: ball is a non-null object that exists in the world
     // postcondition: determines if either ai or the player score needs to be
