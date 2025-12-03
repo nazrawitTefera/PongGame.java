@@ -15,7 +15,9 @@ public class PongGame extends JPanel implements MouseMotionListener {
     private int playerScore;
     private int aiScore;
     private Ball ball;
-    private Paddle userPaddle;// step 1 add any other private variables you may need to play the game.
+    private Paddle userPaddle;
+    //private Speedup speedup;
+    //private SlowDown slowDown;// step 1 add any other private variables you may need to play the game.
 
     public PongGame() {
 
@@ -125,12 +127,10 @@ public class PongGame extends JPanel implements MouseMotionListener {
         //pre-none
         //post- makes sure that the ball slows down when its in the speed down zone
         public void checkSpeedDownZone(){
-            if(ball.getChangeX()<140&& ball.getChangeX()>100){
-                ball.setChangeX(ball.getChangeX()*0.8);
-                ball.setChangeX(ball.getChangeX()*0.8);
-            }
 
         }
+
+        
 
     
 
