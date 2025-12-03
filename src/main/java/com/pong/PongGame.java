@@ -28,26 +28,16 @@ public class PongGame extends JPanel implements MouseMotionListener {
         aiScore.setVisible(true);
         userMouseY = 0;
         addMouseMotionListener(this);
-        ball = new Ball(200, 100, 10, 3, Color.RED, 10);
+        ball = new Ball(100, 200, 10, 3, Color.RED, 10);
 
-        userPaddle=new Paddle(200,200,50,9,Color.RED);//create any other objects necessary to play the game.
+        userPaddle=new Paddle(20,100,50,9,Color.RED);//create any other objects necessary to play the game.
 
     }
-    public void getScore(){
-        if (ball.getX() > width) {
-        playerScore++;
-        resetBall();
-    }
-    if (ball.getX() < 0) {
-        aiScore++;
-        resetBall();
-    }
-    }
+    //pre-
+    //post-
     public void resetBall() {
     ball.setX(width / 2);
     ball.sety(height / 2);
-
-    // reverse direction so it doesn’t go same way each time
     ball.reverseX();
 }
 
@@ -86,17 +76,21 @@ public class PongGame extends JPanel implements MouseMotionListener {
         ball.moveBall();
         checkSpeedUpZone();
         checkSpeedDownZone();
-        ball.bounceOffwalls(0, 470);
-        userPaddle.moveY(ball.getY());//add commands here to make the game play propperly
+        checkCollusion();
+        pointScored();
+        userPaddle.moveY(userMouseY);//add commands here to make the game play propperly
         
         aiPaddle.moveY(ball.getY());
+        //if()
 
         //if (aiPaddle.isTouching(ball)) {
            //ball.reverseX();
        // }
     }
-
-        public void pointScored(){
+       
+//pre
+//post-
+        public void checkCollusion(){
         if(userPaddle.isTouching(ball)){
             ball.reverseX();
         }
@@ -104,6 +98,22 @@ public class PongGame extends JPanel implements MouseMotionListener {
             ball.reverseX();
         }
         }
+    public void bounceOffWalls(){
+           
+        }
+        //pre-
+        //post-
+        public void pointScored(){
+            if(ball.getX()<0){
+                aiScore++;
+                resetBall();
+            }
+            if(ball.getX()>width){
+                playerScore++;
+                resetBall();
+            }
+        }
+        //public
         //pre- none
         //post- checks the speed and makes sure the ball speed's up when its in the speed up zone
         public void checkSpeedUpZone(){

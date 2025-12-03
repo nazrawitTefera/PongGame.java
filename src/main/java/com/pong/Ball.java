@@ -34,6 +34,7 @@ public Ball(int x, int y, int changeX, int changeY, Color color, int size) {
 	   
     x+= changeX;
     y+= changeY;
+    
    }
    
  //precondition: None
@@ -48,22 +49,15 @@ public Ball(int x, int y, int changeX, int changeY, Color color, int size) {
     changeX*=-1;
    }
    
-   //precondition: top and bottom are non-null ints
-   //postcondition: checks if the ball has gone outside of the top or the bottom of the screen
-   public void bounceOffwalls(int top, int bottom){
-    if(y<=top) {
-        reverseY();  
-      }
-      if(y+size>=bottom) {
-        reverseY();  
-      }
+    
+      
       
       
 
 
 
 
-   }
+   
  //precondition: None
  //postcondition: returns the ball's y value
   public int getY() {
