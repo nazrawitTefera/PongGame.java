@@ -41,8 +41,8 @@ public class PongGame extends JPanel implements MouseMotionListener {
         userPaddle=new Paddle(20,100,50,9,Color.RED);//create any other objects necessary to play the game.
 
     }
-    //pre-
-    //post-
+    //pre-none
+    //post-it makes sure that the ball starts from the center and restarts the game
     public void resetBall() {
     ball.setX(width / 2);
     ball.sety(height / 2);
@@ -112,16 +112,20 @@ if (targetY > height - 50) {
 
 aiPaddle.moveY(targetY);
     }
-    //pre-
-    //post-
+    // precondition: ball and middleWall exist and have valid Rectangle shapes
+// postcondition: 
+//    - if ball hits the middle wall, ball's vertical direction reverses
+//    - otherwise, ball movement is unchanged
     public void checkMiddleWall() {
     if (ball.getRectangle().intersects(middleWall)) {
         ball.setChangeY(ball.getChangeY() * -1); // bounce vertically
     }
 }
        
-//pre
-//post-
+// precondition: ball, userPaddle, and aiPaddle exist
+// postcondition: 
+//    - if ball touches either paddle, its horizontal direction reverses
+//    - otherwise, ball direction is unchanged
         public void checkCollusion(){
         if(userPaddle.isTouching(ball)){
             ball.reverseX();
@@ -130,11 +134,16 @@ aiPaddle.moveY(targetY);
             ball.reverseX();
         }
         }
+        // precondition: None
+// postcondition: No effect (method currently empty)
     public void bounceOffWalls(){
            
         }
-        //pre-
-        //post-
+       // precondition: ball exists and can return its x-coordinate
+// postcondition:
+//    - if ball leaves left boundary: AI score increases; ball resets
+//    - if ball leaves right boundary: player score increases; ball resets
+//    - otherwise: no score change
         public void pointScored(){
             if(ball.getX()<0){
                 aiScore++;
@@ -145,16 +154,19 @@ aiPaddle.moveY(targetY);
                 resetBall();
             }
         }
-        //public
-        //pre- none
-        //post- checks the speed and makes sure the ball speed's up when its in the speed up zone
+       // precondition: ball and speedUpZone are initialized
+// postcondition: 
+//    - if the ball gets to the speed up zone, its X speed increases by 20%
+//    - if not the speed is unchanged
         public void checkSpeedUpZone(){
             if (ball.getRectangle().intersects(speedUpZone)) {
                 ball.setChangeX(ball.getChangeX() * 1.2);
     }
         }
-        //pre-none
-        //post- makes sure that the ball slows down when its in the speed down zone
+        // precondition: ball and speedDownZone are initialized
+// postcondition: 
+//    - if the ball gets to the slow down zone, its X speed decreases by 20%
+//    - if not the speed is unchanged
         public void checkSpeedDownZone(){
             if (ball.getRectangle().intersects(speedDownZone)) {
                 ball.setChangeX(ball.getChangeX() * 0.8);
