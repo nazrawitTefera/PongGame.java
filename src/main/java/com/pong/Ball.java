@@ -2,6 +2,7 @@ package com.pong;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Ball {
 private int x;
@@ -47,6 +48,7 @@ public Ball(int x, int y, int changeX, int changeY, Color color, int size) {
    //postcondition: changes the x direction of the ball
    public void reverseX(){
     changeX*=-1;
+    
    }
    
     
@@ -103,6 +105,9 @@ public void setChangeX(double x) {
 //postcondition: sets the changeY of the ball equal to the inputed y
 public void setChangeY(double y) {
 	this.changeY=y;
+}
+public Rectangle getRectangle() {
+    return new Rectangle(x, y, size, size);
 }
   
 

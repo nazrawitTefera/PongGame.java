@@ -16,6 +16,9 @@ public class PongGame extends JPanel implements MouseMotionListener {
     private int aiScore;
     private Ball ball;
     private Paddle userPaddle;
+    private Rectangle speedUpZone;
+    private Rectangle speedDownZone;
+    private Rectangle middleWall;
     //private Speedup speedup;
     //private SlowDown slowDown;// step 1 add any other private variables you may need to play the game.
 
@@ -31,6 +34,9 @@ public class PongGame extends JPanel implements MouseMotionListener {
         userMouseY = 0;
         addMouseMotionListener(this);
         ball = new Ball(100, 200, 10, 3, Color.RED, 10);
+        speedUpZone = new Rectangle(300, 0, 40, 100);
+        middleWall = new Rectangle(300, 150, 40, 100);
+        speedDownZone = new Rectangle(300, 300, 40, 100);
 
         userPaddle=new Paddle(20,100,50,9,Color.RED);//create any other objects necessary to play the game.
 
@@ -40,7 +46,7 @@ public class PongGame extends JPanel implements MouseMotionListener {
     public void resetBall() {
     ball.setX(width / 2);
     ball.sety(height / 2);
-    ball.reverseX();
+    ball.reverseY();
 }
 
     // precondition: None
@@ -67,8 +73,12 @@ public class PongGame extends JPanel implements MouseMotionListener {
         ball.draw(g);
         aiPaddle.draw(g);
         
-        userPaddle.draw(g);//call the "draw" function of any visual component you'd like to show up on the screen.
-
+        userPaddle.draw(g);
+        g.fillRect(
+           middleWall.x,
+           middleWall.y,
+           middleWall.width,
+           middleWall.height);   
     }
 
     // precondition: all required visual components are intialized to non-null
@@ -76,19 +86,39 @@ public class PongGame extends JPanel implements MouseMotionListener {
     // postcondition: one frame of the game is "played"
     public void gameLogic() {
         ball.moveBall();
+        if (ball.getY() < 0) {
+    ball.sety(0);
+    ball.reverseY();
+}
+if (ball.getY() + 10 > height) {  
+    ball.sety(height - 10);
+    ball.reverseY();
+}
         checkSpeedUpZone();
         checkSpeedDownZone();
         checkCollusion();
         pointScored();
         userPaddle.moveY(userMouseY);//add commands here to make the game play propperly
         
-        aiPaddle.moveY(ball.getY());
-        //if()
+    int targetY = ball.getY();
 
-        //if (aiPaddle.isTouching(ball)) {
-           //ball.reverseX();
-       // }
+// keep the target inside the screen so paddle never goes outside
+if (targetY < 0) {
+    targetY = 0;
+}
+if (targetY > height - 50) {
+    targetY = height - 50;
+}
+
+aiPaddle.moveY(targetY);
     }
+    //pre-
+    //post-
+    public void checkMiddleWall() {
+    if (ball.getRectangle().intersects(middleWall)) {
+        ball.setChangeY(ball.getChangeY() * -1); // bounce vertically
+    }
+}
        
 //pre
 //post-
@@ -119,14 +149,16 @@ public class PongGame extends JPanel implements MouseMotionListener {
         //pre- none
         //post- checks the speed and makes sure the ball speed's up when its in the speed up zone
         public void checkSpeedUpZone(){
-            if(ball.getX()>300 && ball.getX()<340){
-                ball.setChangeX(ball.getChangeX()*1.2);
-                ball.setChangeX(ball.getChangeX()*1.2);
-            }
+            if (ball.getRectangle().intersects(speedUpZone)) {
+                ball.setChangeX(ball.getChangeX() * 1.2);
+    }
         }
         //pre-none
         //post- makes sure that the ball slows down when its in the speed down zone
         public void checkSpeedDownZone(){
+            if (ball.getRectangle().intersects(speedDownZone)) {
+                ball.setChangeX(ball.getChangeX() * 0.8);
+    }
 
         }
 
